@@ -1,0 +1,46 @@
+classdef Ball
+    properties
+        Position
+        Radius
+        Velocity
+    end
+
+    methods
+        function obj = Ball(x, y, r)
+            obj.Position = [x, y];
+            obj.Radius = r;
+            obj.Velocity = [0, 0];
+        end
+
+        function obj = Move(obj)
+            obj.Position = obj.Position + obj.Velocity;
+
+            if (obj.Position(1) + obj.Radius + obj.Velocity(1) > 1)
+                obj.Position(1) = 1;
+                obj = obj.Reflect(1);
+
+            elseif (obj.Position(1) - obj.Radius() + obj.Velocity(1) < 0)
+                obj.Position(1) = 0;
+                obj = obj.Reflect(1);
+
+            if (obj.Position(2) + obj.Radius + obj.Velocity(2) > 1)
+                obj.Position(2) = 1;
+                obj = obj.Reflect(-1);
+            end
+
+            if (obj.Position(2) - obj.Radius() + obj.Velocity(2) < 0)
+                obj.Position(2) = 0;
+                obj = obj.Reflect(-1);
+            end
+        end
+
+        % direction = 1 for x, direction = -1 for y
+        function obj = Reflect(obj, direction)
+            if (direction == 1)
+                obj.Velocity = [-obj.Velocity(1), obj.Velocity(2)];
+            elseif (direction == -1)
+                obj.Velocity = [obj.Velocity(1), -obj.Velocity(2)];
+            end
+        end
+    end
+end

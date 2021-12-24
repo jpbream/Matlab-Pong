@@ -1,0 +1,36 @@
+classdef Paddle
+    properties
+        Position
+        Size
+    end
+
+    methods
+        function obj = Paddle(x, y, w, h)
+            obj.Position = [x, y];
+            obj.Size = [w, h];
+        end
+
+        function collision = IntersectBall(obj, ball)
+       
+            topRight = [obj.Position(1) + obj.Size(1), obj.Position(2)];
+            bottomRight = [obj.Position(1) + obj.Size(1), obj.Position(2) + obj.Size(2)];
+            topLeft = [obj.Position(1), obj.Position(2)];
+            bottomLeft = [obj.Position(1), obj.Position(2) + obj.Size(2)];
+
+            
+
+        end
+
+        function collision = IntersectLine(start, stop, ball)
+            lineVector = stop - start;
+            lineVector = lineVector / norm(lineVector);
+
+            ballVector = ball.Position - start;
+            horizontalDistance = ballVector * lineVector;
+            projectionPoint = start + lineVector * horizontalDistance;
+            distanceToLine = norm(projectionPoint - ball);
+
+            collision = distanceToLine < ball.Radius;
+        end
+    end
+end
